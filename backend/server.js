@@ -76,6 +76,11 @@ app.post('/api/generate-survey', async (req, res) => {
 app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'Server is running' });
 });
+// Add this code to handle requests at the root
+app.get('/', (req, res) => {
+    res.send('Welcome to the AI Survey Platform Backend!');
+  });
+  
 
 // Start Server
 app.listen(PORT, () => {

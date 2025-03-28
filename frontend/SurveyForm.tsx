@@ -1,14 +1,21 @@
-// src/SurveyForm.jsx
+/// <reference types="vite/client" />
 import React, { useState } from 'react';
 
-const SurveyForm = () => {
-  const [researchQuestion, setResearchQuestion] = useState('');
-  const [survey, setSurvey] = useState(null);
+interface Survey {
+  id: string;
+  text: string;
+  type: string;
+  options?: string[];  // Optional because only multiple_choice has options
+}
 
-  const handleSubmit = async (e) => {
+const SurveyForm = () => {
+  const [researchQuestion, setResearchQuestion] = useState<string>('');
+  const [survey, setSurvey] = useState<Survey[] | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Make sure your backend URL is correct (use VITE_BACKEND_URL for Vercel or your Render URL)
+    // Ensure the backend URL is correctly set (use VITE_BACKEND_URL for Vercel or Render URL)
     const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/generate-survey`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
