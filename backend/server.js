@@ -5,10 +5,6 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// ES Module equivalent of __dirname
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 dotenv.config();
 
 const app = express();
@@ -18,14 +14,13 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Serve frontend in production (Make sure your frontend is in the correct directory)
+// Serve frontend in production
 if (process.env.NODE_ENV === 'production') {
-  // Adjust this path to wherever your built frontend is located
-  app.use(express.static(path.join(__dirname, '../frontend/dist')));
+  app.use(express.static(path.join(__dirname, 'frontend', 'dist')));
 
-  // Catch-all route for serving the frontend (Make sure index.html is in the correct place)
+  // Catch-all route to serve the frontend
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+    res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
   });
 }
 
@@ -76,11 +71,6 @@ app.post('/api/generate-survey', async (req, res) => {
 app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'Server is running' });
 });
-// Add this code to handle requests at the root
-app.get('/', (req, res) => {
-    res.send('Welcome to the AI Survey Platform Backend!');
-  });
-  
 
 // Start Server
 app.listen(PORT, () => {
