@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: ai-survey-platform
+    env: node
+    buildCommand: npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: GEMINI_API_KEY
+        fromSecretRef:
+          name: gemini-api-key
+          key: GEMINI_API_KEY
+        
+
+        
