@@ -18,10 +18,12 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Serve frontend in production
+// Serve frontend in production (Make sure your frontend is in the correct directory)
 if (process.env.NODE_ENV === 'production') {
+  // Adjust this path to wherever your built frontend is located
   app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
+  // Catch-all route for serving the frontend (Make sure index.html is in the correct place)
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
   });
